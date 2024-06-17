@@ -1,5 +1,3 @@
-// src/utils/transformers.spec.ts
-
 import { formatMovie } from './transformers';
 
 describe('formatMovie function', () => {

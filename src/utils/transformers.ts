@@ -1,5 +1,3 @@
-// src/utils/transformers.ts
-
 import { Movie } from '../models/Movie';
 
 // Interfaz para los datos de la película de la API
@@ -21,7 +19,7 @@ export function formatMovie(apiMovieData: APIMovieData): Movie {
     id: apiMovieData.id,
     title: apiMovieData.title,
     poster: `https://image.tmdb.org/t/p/w500${apiMovieData.poster_path}`,
-    releaseYear: new Date(apiMovieData.release_date).getFullYear(),
+    releaseYear: new Date(apiMovieData.release_date + "T00:00:00").getFullYear(),
     overview: apiMovieData.overview,
     runtime: apiMovieData.runtime,
     genres: apiMovieData.genres.map((genre) => genre.name),
