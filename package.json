@@ -16,7 +16,8 @@
   },
   "dependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.23.1"
   },
   "devDependencies": {
     "@babel/core": "^7.24.7",
@@ -47,5 +48,10 @@
     "ts-jest": "^29.1.4",
     "typescript": "^4.9.5",
     "vite": "^5.2.0"
+  },
+  "jest": {
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/setupTests.ts"
+    ]
   }
 }

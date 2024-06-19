@@ -1,0 +1,6 @@
+.movie-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around; /* Para espaciar las tarjetas y centrarlas */
+    gap: 20px; /* Espacio entre las tarjetas */
+  }

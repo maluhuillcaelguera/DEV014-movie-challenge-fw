@@ -1,0 +1,19 @@
+.movie-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+    width: 150px; /* Ancho de la tarjeta */
+  }
+
+
+  .movie-card:hover {
+    transform: scale(1.05);
+  }
+
+  .poster-image {
+    width: 100%; /* La imagen del póster ocupa todo el ancho de la tarjeta */
+    height: auto; /* La altura se ajusta automáticamente para mantener la proporción */
+  }
+

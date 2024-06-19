@@ -1,0 +1,27 @@
+/* Home.css */
+.Home {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .movie-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .movie-card {
+    margin: 10px;
+    width: 200px;
+  }
+  
+  .movie-poster {
+    width: 100%;
+    height: auto;
+  }
+  
+  .movie-info {
+    text-align: left;
+    padding: 10px;
+  }
+  
