@@ -1,6 +1,6 @@
 import { Movie } from '../models/Movie'; 
 import MovieCard from './MovieCard'; 
-import './MovieList.css';
+import '../styles/MovieList.css';
 
 type MovieListProps = {
   movies: Movie[];

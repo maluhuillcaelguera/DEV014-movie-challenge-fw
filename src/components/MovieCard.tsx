@@ -1,6 +1,6 @@
 import React from 'react';
 import { Movie } from '../models/Movie'; 
-import './MovieCard.css';
+import '../styles/MovieCard.css';
 interface MovieCardProps {
   movie: Movie;
 }

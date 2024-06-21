@@ -5,11 +5,10 @@ describe('formatMovie function', () => {
     const apiMovieData = {
       id: 123,
       title: 'Example Movie',
-      poster_path: '/poster.jpg', // Agrega poster_path
+      poster_path: 'https://image.tmdb.org/t/p/w500/poster.jpg', 
       release_date: '2022-01-01',
       overview: 'This is an example movie.',
-      runtime: 120,
-      genres: [{ id: 1, name: 'Action' }, { id: 2, name: 'Adventure' }],
+      genre_ids: ['Action', 'Adventure'],
       vote_average: 8.5,
     };
 
@@ -21,7 +20,6 @@ describe('formatMovie function', () => {
       poster: 'https://image.tmdb.org/t/p/w500/poster.jpg',
       releaseYear: 2022,
       overview: 'This is an example movie.',
-      runtime: 120,
       genres: ['Action', 'Adventure'],
       voteAverage: 8.5,
     });

@@ -48,10 +48,5 @@
     "ts-jest": "^29.1.4",
     "typescript": "^4.9.5",
     "vite": "^5.2.0"
-  },
-  "jest": {
-    "setupFilesAfterEnv": [
-      "<rootDir>/src/setupTests.ts"
-    ]
   }
 }
