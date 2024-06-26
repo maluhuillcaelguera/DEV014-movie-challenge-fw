@@ -1,5 +1,6 @@
 import { Movie } from '../models/Movie';
 
+// Función existente para formatear datos de películas
 export const formatMovie = (data: any): Movie => {
   return {
     id: data.id,
@@ -12,3 +13,13 @@ export const formatMovie = (data: any): Movie => {
   };
 };
 
+// Función para transformar una matriz de géneros a un Map
+export const formatGenresToMap = (genres: { id: number, name: string }[]): Map<number, string> => {
+  const genreMap = new Map<number, string>();
+  
+  genres.forEach(genre => {
+    genreMap.set(genre.id, genre.name);
+  });
+
+  return genreMap;
+};
