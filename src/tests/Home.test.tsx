@@ -16,7 +16,15 @@ describe('Home Component', () => {
   });
 
   test('muestra el cargador mientras se obtienen los datos', async () => {
-    (APIService.getMovies as jest.Mock).mockResolvedValue([]);
+    (APIService.getMovies as jest.Mock).mockResolvedValue({
+      metaData: {
+        pagination: {
+          currentPage: 1,
+          totalPages: 1
+        }
+      },
+      movies: []
+    });
 
     render(<Home />);
 
@@ -32,14 +40,21 @@ describe('Home Component', () => {
       { id: 1, title: 'Película 1', overview: 'Descripción 1' },
       { id: 2, title: 'Película 2', overview: 'Descripción 2' }
     ];
-    (APIService.getMovies as jest.Mock).mockResolvedValue(mockMovies);
+    (APIService.getMovies as jest.Mock).mockResolvedValue({
+      metaData: {
+        pagination: {
+          currentPage: 1,
+          totalPages: 1
+        }
+      },
+      movies: mockMovies
+    });
 
     render(<Home />);
 
     await waitFor(() => {
       expect(screen.getByText('Mi Catálogo de Películas')).toBeTruthy(); // Verificar que el texto 'Mi Catálogo de Películas' está en el documento
       mockMovies.forEach(movie => {
-        // Asegurarse de que title y overview no son undefined antes de pasarlos a las funciones de consulta
         if (movie.title) {
           expect(screen.getByText(movie.title)).toBeTruthy(); // Verificar que el título de cada película está en el documento
         }

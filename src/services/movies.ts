@@ -1,33 +1,3 @@
-/*import { Movie } from '../models/Movie';
-import { formatMovie } from '../utils/transformers';
-
-
-const API_URL = 'https://api.themoviedb.org/3/discover/movie';
-const API_KEY = import.meta.env.VITE_TOKEN_API;
-
-export class APIService {
-  static async getMovies(): Promise<Movie[]> {
-    try {
-      const response = await fetch(`${API_URL}?api_key=${API_KEY}&sort_by=popularity.desc`);
-      
-      if (!response.ok) {
-        throw new Error('Failed to fetch movies');
-      }
-
-      const data = await response.json();
-      console.log('API Response:', data);
-
-      if (!data.results) {
-        throw new Error('Unexpected API response structure');
-      }
-
-      return data.results.map((movie: any) => formatMovie(movie));
-    } catch (error) {
-      console.error('Error fetching movies:', error);
-      throw error;
-    }
-  }
-}*/
 import { Movie } from '../models/Movie';
 import { formatMovie } from '../utils/transformers';
 
@@ -47,7 +17,7 @@ interface MovieResponse {
   movies: Movie[];
 }
 
-const API_URL = 'https://api.themoviedb.org/3/discover/movie';
+const API_URL = 'https://api.themoviedb.org/3';
 const API_KEY = import.meta.env.VITE_TOKEN_API;
 
 export class APIService {
@@ -55,7 +25,7 @@ export class APIService {
     const { page } = params.filters;
 
     try {
-      const response = await fetch(`${API_URL}?api_key=${API_KEY}&sort_by=popularity.desc&page=${page}`);
+      const response = await fetch(`${API_URL}/discover/movie?api_key=${API_KEY}&sort_by=popularity.desc&page=${page}`);
 
       if (!response.ok) {
         throw new Error('Failed to fetch movies');
@@ -85,6 +55,28 @@ export class APIService {
       throw error;
     }
   }
+
+  static async getMovieGenres(): Promise<{ id: number, name: string }[]> {
+    try {
+      const response = await fetch(`${API_URL}/genre/movie/list?api_key=${API_KEY}&language=es-ES`);
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch movie genres');
+      }
+
+      const data = await response.json();
+
+      if (!data.genres) {
+        throw new Error('Unexpected API response structure');
+      }
+
+      return data.genres;
+    } catch (error) {
+      console.error('Error fetching movie genres:', error);
+      throw error;
+    }
+  }
 }
+
 
 
