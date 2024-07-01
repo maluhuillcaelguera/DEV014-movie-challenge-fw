@@ -24,28 +24,31 @@ describe('Pagination Component', () => {
     expect(mockOnSelectPage).toHaveBeenCalledWith(4);
   });
 
-  test('disables previous button on first page and next button on last page', () => {
+  test('disables previous button on first page', () => {
     const mockOnSelectPage = jest.fn();
     const { getByText } = render(
       <Pagination currentPage={1} totalPages={3} onSelectPage={mockOnSelectPage} />
     );
 
-    const previousButton = getByText('Anterior');
-    const nextButton = getByText('Siguiente');
+    const previousButton = getByText('Anterior') as HTMLButtonElement;
 
     fireEvent.click(previousButton);
     expect(mockOnSelectPage).not.toHaveBeenCalled();
 
-    fireEvent.click(nextButton);
-    expect(mockOnSelectPage).toHaveBeenCalledWith(2);
+    expect(previousButton.disabled).toBe(true); // Verificar que el botón está deshabilitado
+  });
+
+  test('disables next button on last page', () => {
+    const mockOnSelectPage = jest.fn();
+    const { getByText } = render(
+      <Pagination currentPage={3} totalPages={3} onSelectPage={mockOnSelectPage} />
+    );
+
+    const nextButton = getByText('Siguiente') as HTMLButtonElement;
 
     fireEvent.click(nextButton);
-    expect(mockOnSelectPage).toHaveBeenCalledWith(3);
+    expect(mockOnSelectPage).not.toHaveBeenCalled();
 
-    fireEvent.click(nextButton);
-    expect(mockOnSelectPage).toHaveBeenCalledTimes(3);
-
-    expect(previousButton).toBeTruthy();
-    expect(nextButton).toBeTruthy();
+    expect(nextButton.disabled).toBe(true); // Verificar que el botón está deshabilitado
   });
 });

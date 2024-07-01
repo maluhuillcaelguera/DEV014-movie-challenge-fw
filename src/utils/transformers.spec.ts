@@ -12,7 +12,12 @@ describe('formatMovie function', () => {
       vote_average: 8.5,
     };
 
-    const formattedMovie = formatMovie(apiMovieData);
+    const genreMap = new Map<number, string>([
+      [28, 'Action'],
+      [12, 'Adventure']
+    ]);
+
+    const formattedMovie = formatMovie(apiMovieData, genreMap);
 
     expect(formattedMovie).toEqual({
       id: 123,
@@ -20,7 +25,7 @@ describe('formatMovie function', () => {
       poster: 'https://image.tmdb.org/t/p/w500/poster.jpg',
       releaseYear: 2022,
       overview: 'This is an example movie.',
-      genres: [28, 12],
+      genres: ['Action', 'Adventure'],
       voteAverage: 8.5,
     });
   });

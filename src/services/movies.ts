@@ -21,7 +21,7 @@ const API_URL = 'https://api.themoviedb.org/3';
 const API_KEY = import.meta.env.VITE_TOKEN_API;
 
 export class APIService {
-  static async getMovies(params: GetMoviesParams): Promise<MovieResponse> {
+  static async getMovies(params: GetMoviesParams, genreMap: Map<number, string>): Promise<MovieResponse> {
     const { page } = params.filters;
 
     try {
@@ -38,7 +38,7 @@ export class APIService {
         throw new Error('Unexpected API response structure');
       }
 
-      const movies = data.results.map((movie: any) => formatMovie(movie));
+      const movies = data.results.map((movie: any) => formatMovie(movie, genreMap));
       const totalPages = data.total_pages || 1;
 
       return {
@@ -77,6 +77,3 @@ export class APIService {
     }
   }
 }
-
-
-

@@ -1,6 +1,6 @@
 module.exports = {
   roots: ["<rootDir>/src"],
-  testEnvironment: "node",
+  testEnvironment: "jsdom",
   setupFilesAfterEnv: ['<rootDir>/setupTests.js'],
   transform: {
     "^.+\\.(ts|js|tsx|jsx)$": "@swc/jest",
@@ -11,6 +11,8 @@ module.exports = {
   moduleNameMapper: {
     "^.+\\.css$": "<rootDir>/src/__mocks__/file-mock.cjs",
   },
+  preset: 'ts-jest',
+  testMatch: ['**/?(*.)+(spec|test).[tj]s?(x)'],
 };
 
   

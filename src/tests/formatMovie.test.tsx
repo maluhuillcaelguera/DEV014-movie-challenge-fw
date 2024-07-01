@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect'; // para los matchers como toBeInTheDocument
+import '@testing-library/jest-dom';
 import MovieCard from '../components/MovieCard';
 import { Movie } from '../models/Movie';
 
