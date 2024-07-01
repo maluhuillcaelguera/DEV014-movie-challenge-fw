@@ -23,3 +23,10 @@ export const formatGenresToMap = (genres: { id: number, name: string }[]): Map<n
 
   return genreMap;
 };
+
+export const formatGenresToOptions = (genres: { id: number, name: string }[]): { value: string, label: string }[] => {
+  return genres.map(genre => ({
+    value: genre.id.toString(),
+    label: genre.name
+  }));
+};
