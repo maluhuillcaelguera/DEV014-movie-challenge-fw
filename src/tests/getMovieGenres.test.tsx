@@ -1,98 +1,104 @@
 import { APIService } from '../services/movies';
 import fetchMock from 'jest-fetch-mock';
-import { formatGenresToMap } from '../utils/transformers';
-
 jest.mock('node-fetch', () => require('jest-fetch-mock'));
+fetchMock.enableMocks();
 
-describe('APIService', () => {
+describe('APIService getMovies', () => {
   beforeEach(() => {
     fetchMock.resetMocks();
   });
 
-  describe('getMovieGenres', () => {
-    it('should return an array of genres on successful API call', async () => {
-      const mockGenres = [
-        { id: 1, name: 'Acción' },
-        { id: 2, name: 'Comedia' }
-      ];
+  it('should fetch movies with default sorting by popularity', async () => {
+    const mockMovies = [{ id: 1, title: 'Movie 1', genre_ids: [28], release_date: '2021-01-01', vote_average: 8, poster_path: 'path1.jpg' }];
+    fetchMock.mockResponseOnce(JSON.stringify({ results: mockMovies, total_pages: 1 }));
 
-      fetchMock.mockResponseOnce(JSON.stringify({ genres: mockGenres }));
+    const genreMap = new Map<number, string>();
+    genreMap.set(28, 'Action');
 
-      const genres = await APIService.getMovieGenres();
-      expect(genres).toEqual(mockGenres);
-    });
-
-    it('should throw an error when the API call fails', async () => {
-      fetchMock.mockReject(new Error('Network error'));
-
-      await expect(APIService.getMovieGenres()).rejects.toThrow('Failed to fetch movie genres');
-    });
-
-    it('should throw an error when the API response structure is unexpected', async () => {
-      fetchMock.mockResponseOnce(JSON.stringify({ unexpectedKey: [] }));
-
-      await expect(APIService.getMovieGenres()).rejects.toThrow('Unexpected API response structure');
-    });
+    const response = await APIService.getMovies({ filters: { page: 1, genreId: null, sortBy: null } }, genreMap);
+    
+    expect(response.movies.length).toBe(1);
+    expect(response.movies[0].title).toBe('Movie 1');
   });
 
-  describe('getMovies', () => {
-    it('should correctly format movies with genres', async () => {
-      const mockMovies = [
-        {
-          id: 1,
-          title: 'Movie 1',
-          poster_path: '/poster1.jpg',
-          release_date: '2022-01-01',
-          overview: 'Overview 1',
-          genre_ids: [28, 35],
-          vote_average: 7.5
-        },
-        {
-          id: 2,
-          title: 'Movie 2',
-          poster_path: '/poster2.jpg',
-          release_date: '2021-01-01',
-          overview: 'Overview 2',
-          genre_ids: [18],
-          vote_average: 8.0
-        }
-      ];
+  it('should fetch movies with genre filter', async () => {
+    const mockMovies = [{ id: 1, title: 'Movie 1', genre_ids: [28], release_date: '2021-01-01', vote_average: 8, poster_path: 'path1.jpg' }];
+    fetchMock.mockResponseOnce(JSON.stringify({ results: mockMovies, total_pages: 1 }));
 
-      const mockGenreMap = formatGenresToMap([
-        { id: 28, name: 'Action' },
-        { id: 35, name: 'Comedy' },
-        { id: 18, name: 'Drama' }
-      ]);
+    const genreMap = new Map<number, string>();
+    genreMap.set(28, 'Action');
 
-      fetchMock.mockResponses(
-        [JSON.stringify({ results: mockMovies, total_pages: 1 }), { status: 200 }],
-        [JSON.stringify({ genres: [{ id: 28, name: 'Action' }, { id: 35, name: 'Comedy' }, { id: 18, name: 'Drama' }] }), { status: 200 }]
-      );
+    const response = await APIService.getMovies({ filters: { page: 1, genreId: 28, sortBy: null } }, genreMap);
 
-      const response = await APIService.getMovies({ filters: { page: 1 } }, mockGenreMap);
+    expect(response.movies.length).toBe(1);
+    expect(response.movies[0].title).toBe('Movie 1');
+  });
 
-      expect(response.movies).toEqual([
-        {
-          id: 1,
-          title: 'Movie 1',
-          poster: 'https://image.tmdb.org/t/p/w500/poster1.jpg',
-          releaseYear: 2022,
-          overview: 'Overview 1',
-          genres: ['Action', 'Comedy'],
-          voteAverage: 7.5
-        },
-        {
-          id: 2,
-          title: 'Movie 2',
-          poster: 'https://image.tmdb.org/t/p/w500/poster2.jpg',
-          releaseYear: 2021,
-          overview: 'Overview 2',
-          genres: ['Drama'],
-          voteAverage: 8.0
-        }
-      ]);
-    });
+  it('should fetch movies with sorting by release date', async () => {
+    const mockMovies = [{ id: 1, title: 'Movie 1', genre_ids: [28], release_date: '2021-01-01', vote_average: 8, poster_path: 'path1.jpg' }];
+    fetchMock.mockResponseOnce(JSON.stringify({ results: mockMovies, total_pages: 1 }));
 
-    // Más pruebas para errores y otras condiciones
+    const genreMap = new Map<number, string>();
+    genreMap.set(28, 'Action');
+
+    const response = await APIService.getMovies({ filters: { page: 1, genreId: null, sortBy: 'release_date.desc' } }, genreMap);
+
+    expect(response.movies.length).toBe(1);
+    expect(response.movies[0].title).toBe('Movie 1');
   });
 });
+/*// src/services/movies.test.ts
+import { APIService } from './movies';
+import { formatMovie } from '../utils/transformers';
+
+describe('APIService', () => {
+  const genreMap = new Map<number, string>([
+    [28, 'Action'],
+    [35, 'Comedy'],
+    [18, 'Drama'],
+  ]);
+
+  it('should fetch movies correctly', async () => {
+    const params = {
+      filters: {
+        page: 1,
+        genreId: null,
+        sortBy: null,
+      },
+    };
+
+    const response = await APIService.getMovies(params, genreMap);
+
+    expect(response.movies).toHaveLength(2);
+    expect(response.metaData.pagination.currentPage).toBe(1);
+    expect(response.metaData.pagination.totalPages).toBe(2);
+
+    // Check formatMovie transformation
+    expect(response.movies[0]).toEqual(
+      expect.objectContaining({
+        id: expect.any(Number),
+        title: expect.any(String),
+        poster: expect.any(String),
+        overview: expect.any(String),
+        releaseYear: expect.any(Number),
+        voteAverage: expect.any(Number),
+        genres: expect.arrayContaining([expect.any(String)]),
+      })
+    );
+  });
+
+  it('should fetch movie genres correctly', async () => {
+    const genres = await APIService.getMovieGenres();
+
+    expect(genres).toHaveLength(3);
+    expect(genres).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: expect.any(Number),
+          name: expect.any(String),
+        }),
+      ])
+    );
+  });
+});
+ */

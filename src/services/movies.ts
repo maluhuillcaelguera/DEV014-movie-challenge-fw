@@ -4,6 +4,8 @@ import { formatMovie } from '../utils/transformers';
 interface GetMoviesParams {
   filters: {
     page: number;
+    genreId: number | null;
+    sortBy: string | null;
   };
 }
 
@@ -22,10 +24,14 @@ const API_KEY = import.meta.env.VITE_TOKEN_API;
 
 export class APIService {
   static async getMovies(params: GetMoviesParams, genreMap: Map<number, string>): Promise<MovieResponse> {
-    const { page } = params.filters;
+    const { page, genreId, sortBy } = params.filters;
+    
+    // Construir la URL con los parámetros opcionales
+    const genreFilter = genreId ? `&with_genres=${genreId}` : '';
+    const sortCriteria = sortBy ? `&sort_by=${sortBy}` : '&sort_by=popularity.desc';
 
     try {
-      const response = await fetch(`${API_URL}/discover/movie?api_key=${API_KEY}&sort_by=popularity.desc&page=${page}`);
+      const response = await fetch(`${API_URL}/discover/movie?api_key=${API_KEY}&page=${page}${genreFilter}${sortCriteria}`);
 
       if (!response.ok) {
         throw new Error('Failed to fetch movies');
@@ -56,23 +62,20 @@ export class APIService {
     }
   }
 
-  static async getMovieGenres(): Promise<{ id: number, name: string }[]> {
+  static async getMovieGenres(): Promise<{ id: number; name: string }[]> {
     try {
-      const response = await fetch(`${API_URL}/genre/movie/list?api_key=${API_KEY}&language=es-ES`);
-
+      const response = await fetch(`${API_URL}/genre/movie/list?api_key=${API_KEY}`);
+      
       if (!response.ok) {
-        throw new Error('Failed to fetch movie genres');
+        throw new Error('Failed to fetch genres');
       }
 
       const data = await response.json();
-
-      if (!data.genres) {
-        throw new Error('Unexpected API response structure');
-      }
+      console.log('Genres API Response:', data);
 
       return data.genres;
     } catch (error) {
-      console.error('Error fetching movie genres:', error);
+      console.error('Error fetching genres:', error);
       throw error;
     }
   }

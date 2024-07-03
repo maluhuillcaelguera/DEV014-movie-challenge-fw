@@ -1,0 +1,21 @@
+.list-options {
+    display: flex;
+    align-items: center;
+  }
+  
+  .list-options select {
+    margin-right: 10px;
+  }
+  
+  .list-options button {
+    padding: 5px 10px;
+    background-color: #ff6b6b;
+    border: none;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .list-options button:hover {
+    background-color: #ff4c4c;
+  }
+  
