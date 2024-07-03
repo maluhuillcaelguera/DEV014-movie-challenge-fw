@@ -1,3 +1,4 @@
+// src/services/movieservice.ts
 import { Movie } from '../models/Movie';
 import { formatMovie } from '../utils/transformers';
 
@@ -76,6 +77,24 @@ export class APIService {
       return data.genres;
     } catch (error) {
       console.error('Error fetching genres:', error);
+      throw error;
+    }
+  }
+
+  static async getMovieDetail(id: number, genreMap: Map<number, string>): Promise<Movie> {
+    try {
+      const response = await fetch(`${API_URL}/movie/${id}?api_key=${API_KEY}`);
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch movie details');
+      }
+
+      const data = await response.json();
+      console.log('API Response:', data);
+
+      return formatMovie(data, genreMap);
+    } catch (error) {
+      console.error('Error fetching movie details:', error);
       throw error;
     }
   }
