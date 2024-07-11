@@ -2,15 +2,42 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import Home from '../components/Home';
 import { APIService } from '../services/movies';
-import { Movie } from '../models/Movie';
+jest.mock('../services/movies');
 
+const mockGenresResponse = [
+  { id: 1, name: 'Action' },
+  { id: 2, name: 'Comedy' },
+];
 
-jest.mock('../services/movieService', () => ({
-  APIService: {
-    getMovies: jest.fn(),
-    getMovieGenres: jest.fn()
-  }
-}));
+const mockMoviesResponse = {
+  movies: [
+    {
+      id: 1,
+      title: 'Movie 1',
+      poster_path: '/path/to/poster1.jpg',
+      release_date: '2020-01-01',
+      overview: 'Overview of movie 1',
+      runtime: 120,
+      genres: [1, 2],
+      vote_average: 8.0,
+    },
+    {
+      id: 2,
+      title: 'Movie 2',
+      poster_path: '/path/to/poster2.jpg',
+      release_date: '2021-01-01',
+      overview: 'Overview of movie 2',
+      runtime: 90,
+      genres: [1],
+      vote_average: 7.5,
+    },
+  ],
+  metaData: {
+    pagination: {
+      totalPages: 10,
+    },
+  },
+};
 
 describe('Home Component', () => {
   afterEach(() => {
