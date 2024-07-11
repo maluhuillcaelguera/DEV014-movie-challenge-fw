@@ -1,6 +1,26 @@
+// src/tests/ListOptions.test.tsx
+import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
-import ListOptions from '../components/ListOptions';
+import ListOptions, { Option, ListOptionsProps } from '../components/ListOptions';
+
+const options: Option[] = [
+  { value: 'option1', label: 'Option 1' },
+  { value: 'option2', label: 'Option 2' },
+  { value: 'option3', label: 'Option 3' },
+];
+
+const renderComponent = (props: Partial<ListOptionsProps> = {}) => {
+  const defaultProps: ListOptionsProps = {
+    options: options,
+    selectedOption: null,
+    onChange: jest.fn(),
+    onClear: jest.fn(),
+    placeholder: 'Select an option',
+    ...props,
+  };
+
+  return render(<ListOptions {...defaultProps} />);
+};
 
 describe('ListOptions Component', () => {
   const options = [
