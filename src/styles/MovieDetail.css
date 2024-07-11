@@ -1,0 +1,70 @@
+/* Estilos para MovieDetail */
+body {
+  background-color: #121212;
+  color: #e0e0e0;
+  font-family: 'Arial', sans-serif;
+}
+
+.movie-detail {
+  display: flex;
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  margin: 20px auto;
+  max-width: 800px;
+  color: #e0e0e0;
+  position: relative; /* Añadido para posicionar el botón */
+}
+
+.movie-detail img {
+  width: 50%; /* Ajusta el ancho de la imagen */
+  object-fit: cover;
+  border-bottom: 1px solid #333;
+  border-radius: 8px;
+}
+
+.movie-detail-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.movie-detail-content h2 {
+  margin: 0;
+  font-size: 24px;
+  color: #e0e0e0;
+}
+
+.movie-detail-content p {
+  margin: 8px 0;
+  color: #a0a0a0;
+}
+
+
+
+.genres, .description {
+  margin-top: 10px;
+  color: #a0a0a0;
+}
+
+.button-container {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+
+.watch-button, .back-button {
+  background-color: #08F29A;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 5px 10px 5px 0; /* Ajusta los márgenes de los botones */
+}
+
+.watch-button:hover, .back-button:hover {
+  background-color: #08F29A;
+}
