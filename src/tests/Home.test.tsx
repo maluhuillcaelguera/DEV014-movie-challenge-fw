@@ -61,32 +61,17 @@ describe('Home Component', () => {
     expect(screen.getByTestId('loader')).toBeInTheDocument();
   });
 
-  test('muestra correctamente las películas basadas en datos simulados', async () => {
-    const mockMovies: Movie[] = [
-      { id: 1, title: 'Película 1', poster: 'https://example.com/avatar-poster.jpg', releaseYear: 2020, overview: 'Overview 1', genres: ['Action'], voteAverage: 7.5 },
-      { id: 2, title: 'Película 2', poster: 'https://example.com/avatar1-poster.jpg', releaseYear: 2021, overview: 'Overview 2', genres: ['Comedy'], voteAverage: 8.0 }
-    ];
+  test('should render movies and genres', async () => {
+  await act( async () => {
+      (APIService.getMovieGenres as jest.Mock).mockResolvedValue(mockGenresResponse);
+      (APIService.getMovies as jest.Mock).mockResolvedValue(mockMoviesResponse);
 
-    (APIService.getMovies as jest.Mock).mockResolvedValue({
-      metaData: {
-        pagination: {
-          currentPage: 1,
-          totalPages: 1
-        }
-      },
-      movies: mockMovies
+      render(
+        <MemoryRouter>
+          <Home />
+        </MemoryRouter>
+      );
     });
-
-    (APIService.getMovieGenres as jest.Mock).mockResolvedValue([
-      { id: 28, name: 'Action' },
-      { id: 35, name: 'Comedy' }
-    ]);
-
-    render(
-      <MemoryRouter>
-        <Home />
-      </MemoryRouter>
-    );
 
     await waitFor(() => {
       expect(screen.getByText('Mi Catálogo de Películas')).toBeTruthy();
