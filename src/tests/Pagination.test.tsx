@@ -14,19 +14,16 @@ test('llama a onSelectPage con el número de página correcto al hacer clic en l
   expect(mockOnSelectPage).toHaveBeenCalledWith(4); // Ajusta esto según la lógica de paginación esperada
 });
 
-  test('disables previous button on first page', () => {
-    const mockOnSelectPage = jest.fn();
-    const { getByText } = render(
-      <Pagination currentPage={1} totalPages={3} onSelectPage={mockOnSelectPage} />
-    );
+test('desactiva el botón Anterior en la primera página', () => {
+  const mockOnSelectPage = jest.fn();
+  render(<Pagination currentPage={1} totalPages={10} onSelectPage={mockOnSelectPage} />);
 
-    const previousButton = getByText('Anterior') as HTMLButtonElement;
+  const previousButton = screen.getByText('Anterior') as HTMLButtonElement;
+  expect(previousButton.disabled).toBe(true);
 
-    fireEvent.click(previousButton);
-    expect(mockOnSelectPage).not.toHaveBeenCalled();
-
-    expect(previousButton.disabled).toBe(true); // Verificar que el botón está deshabilitado
-  });
+  fireEvent.click(previousButton);
+  expect(mockOnSelectPage).not.toHaveBeenCalled();
+});
 
   test('disables next button on last page', () => {
     const mockOnSelectPage = jest.fn();
