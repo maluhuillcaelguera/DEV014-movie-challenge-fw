@@ -37,10 +37,11 @@ describe('ListOptions Component', () => {
 
   test('calls onChange when an option is selected', () => {
     const handleChange = jest.fn();
-    render(<ListOptions options={options} selectedOption={null} onChange={handleChange} onClear={() => {}} />);
-    const select = screen.getByRole('combobox');
-    fireEvent.change(select, { target: { value: '2' } });
-    expect(handleChange).toHaveBeenCalledWith({ value: '2', label: 'Option 2' });
+    renderComponent({ onChange: handleChange });
+
+    fireEvent.change(screen.getByRole('combobox'), { target: { value: 'option1' } });
+
+    expect(handleChange).toHaveBeenCalledWith({ value: 'option1', label: 'Option 1' });
   });
 
   test('calls onClear when clear button is clicked', () => {
