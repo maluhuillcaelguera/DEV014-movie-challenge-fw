@@ -25,17 +25,13 @@ test('desactiva el botón Anterior en la primera página', () => {
   expect(mockOnSelectPage).not.toHaveBeenCalled();
 });
 
-  test('disables next button on last page', () => {
-    const mockOnSelectPage = jest.fn();
-    const { getByText } = render(
-      <Pagination currentPage={3} totalPages={3} onSelectPage={mockOnSelectPage} />
-    );
+test('desactiva el botón Siguiente en la última página', () => {
+  const mockOnSelectPage = jest.fn();
+  render(<Pagination currentPage={10} totalPages={10} onSelectPage={mockOnSelectPage} />);
 
-    const nextButton = getByText('Siguiente') as HTMLButtonElement;
+  const nextButton = screen.getByText('Siguiente') as HTMLButtonElement;
+  expect(nextButton.disabled).toBe(true);
 
-    fireEvent.click(nextButton);
-    expect(mockOnSelectPage).not.toHaveBeenCalled();
-
-    expect(nextButton.disabled).toBe(true); // Verificar que el botón está deshabilitado
-  });
+  fireEvent.click(nextButton);
+  expect(mockOnSelectPage).not.toHaveBeenCalled();
 });
