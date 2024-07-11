@@ -1,4 +1,6 @@
+// src/components/Pagination.tsx
 import React from 'react';
+import '../styles/Pagination.css'; // Asegúrate de importar el archivo CSS
 
 interface PaginationProps {
   currentPage: number;
@@ -19,15 +21,42 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onSele
     }
   };
 
+  const handleFirstPageClick = () => {
+    onSelectPage(1);
+  };
+
+  const handleLastPageClick = () => {
+    onSelectPage(totalPages);
+  };
+
+  const renderPageNumbers = () => {
+    const pageNumbers = [];
+    for (let i = 1; i <= 10; i++) {
+      pageNumbers.push(
+        <button
+          key={i}
+          className={`page-number ${i === currentPage ? 'active' : ''}`}
+          onClick={() => onSelectPage(i)}
+        >
+          {i}
+        </button>
+      );
+    }
+    return pageNumbers;
+  };
+
   return (
     <div className="pagination">
-      <button onClick={handlePreviousClick} disabled={currentPage === 1}>
-        Anterior
+     
+      <button className="pagination-button" onClick={handlePreviousClick} disabled={currentPage === 1}>
+         Anterior
       </button>
-      <span>Página {currentPage} de {totalPages}</span>
-      <button onClick={handleNextClick} disabled={currentPage === totalPages}>
-        Siguiente
+      {renderPageNumbers()}
+      
+      <button className="pagination-button" onClick={handleNextClick} disabled={currentPage === totalPages}>
+        Siguiente 
       </button>
+      
     </div>
   );
 };
