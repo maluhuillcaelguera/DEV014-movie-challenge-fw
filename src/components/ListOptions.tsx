@@ -1,21 +1,24 @@
 import React from 'react';
+import '../styles/ListOptions.css'; 
 
-interface Option {
+export interface Option {  // Asegúrate de exportar esta interfaz
   value: string;
   label: string;
 }
 
-interface ListOptionsProps {
+export interface ListOptionsProps {  // Asegúrate de exportar esta interfaz
   options: Option[];
   selectedOption: Option | null;
   onChange: (option: Option) => void;
   onClear: () => void;
+  placeholder: string; // Nueva propiedad
 }
 
-const ListOptions: React.FC<ListOptionsProps> = ({ options, selectedOption, onChange, onClear }) => {
+const ListOptions: React.FC<ListOptionsProps> = ({ options, selectedOption, onChange, onClear, placeholder }) => {
   return (
     <div className="list-options">
       <select 
+        className="custom-select" // Añade esta clase para estilizar el selector
         value={selectedOption ? selectedOption.value : ''} 
         onChange={(e) => {
           const selectedValue = (e.target as HTMLSelectElement).value;  // Conversión de tipo aquí
@@ -25,7 +28,7 @@ const ListOptions: React.FC<ListOptionsProps> = ({ options, selectedOption, onCh
           }
         }}
       >
-        <option value="" disabled>Select an option</option>
+        <option value="" disabled>{placeholder}</option> {/* Usar el placeholder aquí */}
         {options.map(option => (
           <option key={option.value} value={option.value}>
             {option.label}
@@ -33,8 +36,8 @@ const ListOptions: React.FC<ListOptionsProps> = ({ options, selectedOption, onCh
         ))}
       </select>
       {selectedOption && (
-        <button onClick={onClear}>
-          Clear Selection
+        <button className="clear-button" onClick={onClear}>
+          X
         </button>
       )}
     </div>
