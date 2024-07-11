@@ -63,5 +63,11 @@ describe('ListOptions Component', () => {
 
     expect(screen.getByText(/Clear Selection/i)).toBeTruthy();
   });
+
+  test('displays the correct selected option', () => {
+    renderComponent({ selectedOption: options[1] });
+
+    expect((screen.getByRole('combobox') as HTMLSelectElement).value).toBe('option2');
+  });
   });
 });
