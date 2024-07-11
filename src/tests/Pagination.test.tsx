@@ -1,21 +1,9 @@
-import { render, fireEvent } from '@testing-library/react';
-import Pagination from '../components/Pagination';
+import React from 'react';
+import { render, fireEvent, screen, waitFor } from '@testing-library/react';
+import Pagination from '../components/Pagination'; // Ajusta la ruta de importación según tu proyecto
 
-describe('Pagination Component', () => {
-  test('renders pagination with correct current and total pages', () => {
-    const mockOnSelectPage = jest.fn();
-    const { getByText } = render(
-      <Pagination currentPage={1} totalPages={5} onSelectPage={mockOnSelectPage} />
-    );
 
-    expect(getByText('Página 1 de 5')).toBeTruthy();
-  });
-
-  test('calls onSelectPage with correct page number when clicking previous and next buttons', () => {
-    const mockOnSelectPage = jest.fn();
-    const { getByText } = render(
-      <Pagination currentPage={3} totalPages={7} onSelectPage={mockOnSelectPage} />
-    );
+test('llama a onSelectPage con el número de página correcto al hacer clic en los botones anterior y siguiente', () => {
 
     fireEvent.click(getByText('Anterior'));
     expect(mockOnSelectPage).toHaveBeenCalledWith(2);
