@@ -1,7 +1,10 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import React from 'react';
+import { render, screen, waitFor, act } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import { MemoryRouter } from 'react-router-dom';
 import Home from '../components/Home';
 import { APIService } from '../services/movies';
+
 jest.mock('../services/movies');
 
 const mockGenresResponse = [
