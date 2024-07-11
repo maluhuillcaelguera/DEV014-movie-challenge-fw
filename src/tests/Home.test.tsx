@@ -97,4 +97,6 @@ describe('Home Component', () => {
       expect(screen.getByText(/Error: Failed to fetch/i)).toBeInTheDocument();
     });
   });
+
+  // Agrega más pruebas según tus necesidades
 });
