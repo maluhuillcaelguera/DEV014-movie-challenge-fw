@@ -1,0 +1,3 @@
+{
+    "reescritas": [{ "fuente": "/(.*)", "destino": "/index.html" }]
+  }
