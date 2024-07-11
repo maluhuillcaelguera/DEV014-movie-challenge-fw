@@ -1,4 +1,5 @@
 import { Movie } from '../models/Movie';
+import optionalPoster from '../assets/pelicula.jpeg';
 
 export const formatMovie = (data: any, genreMap: Map<number, string>): Movie => {
   // const genres = data.genre_ids && data.genre_ids.map((id: number) => genreMap.get(id) || 'Unknown Genre');
@@ -8,7 +9,7 @@ export const formatMovie = (data: any, genreMap: Map<number, string>): Movie => 
 console.log(genreMap)
   return {
     id: data.id,
-    poster: data.poster_path ? `https://image.tmdb.org/t/p/w500${data.poster_path}` : '',
+    poster: data.poster_path ? `https://image.tmdb.org/t/p/w500${data.poster_path}` : optionalPoster,
     title: data.title || 'Unknown Title',
     overview: data.overview,
     releaseYear: data.release_date ? new Date(data.release_date + "T00:00:00").getFullYear() : 0,
