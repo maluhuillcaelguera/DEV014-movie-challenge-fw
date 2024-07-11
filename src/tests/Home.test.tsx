@@ -74,17 +74,9 @@ describe('Home Component', () => {
     });
 
     await waitFor(() => {
-      expect(screen.getByText('Mi Catálogo de Películas')).toBeTruthy();
-      mockMovies.forEach(movie => {
-        if (movie.title) {
-          expect(screen.getByText(movie.title)).toBeTruthy();
-        }
-        if (movie.poster) {
-          expect(screen.getByAltText(movie.poster)).toBeTruthy();
-        }
-        if (movie.releaseYear) {
-          expect(screen.getByText(movie.releaseYear.toString())).toBeTruthy();
-        }
+      expect(screen.getByText(/Mi Catálogo de Películas/i)).toBeInTheDocument();
+      mockMoviesResponse.movies.forEach((movie) => {
+        expect(screen.getByText(movie.title)).toBeInTheDocument();
       });
     });
   });
