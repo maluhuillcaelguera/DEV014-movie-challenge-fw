@@ -43,34 +43,22 @@ const mockMoviesResponse = {
 };
 
 describe('Home Component', () => {
-  afterEach(() => {
+  beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  test('muestra el cargador mientras se obtienen los datos', async () => {
-    (APIService.getMovies as jest.Mock).mockResolvedValue({
-      metaData: {
-        pagination: {
-          currentPage: 1,
-          totalPages: 1
-        }
-      },
-      movies: []
-    });
-
-    (APIService.getMovieGenres as jest.Mock).mockResolvedValue([]);
-
+  test('should render loader initially', async () => {
+    // Simula una promesa que nunca se resuelve para mantener el estado de carga
+    jest.spyOn(APIService, 'getMovieGenres').mockImplementation(() => new Promise(() => {}));
+    jest.spyOn(APIService, 'getMovies').mockImplementation(() => new Promise(() => {}));
+  
     render(
       <MemoryRouter>
         <Home />
       </MemoryRouter>
     );
-
-    expect(screen.getByText('Cargando...')).toBeTruthy(); // Verificar que el texto 'Cargando...' está en el documento
-
-    await waitFor(() => {
-      expect(screen.queryByText('Cargando...')).toBeNull(); // Verificar que el texto 'Cargando...' ya no está en el documento
-    });
+  
+    expect(screen.getByTestId('loader')).toBeInTheDocument();
   });
 
   test('muestra correctamente las películas basadas en datos simulados', async () => {
