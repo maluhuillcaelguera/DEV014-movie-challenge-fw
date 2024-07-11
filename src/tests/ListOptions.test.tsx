@@ -44,11 +44,12 @@ describe('ListOptions Component', () => {
     expect(handleChange).toHaveBeenCalledWith({ value: 'option1', label: 'Option 1' });
   });
 
-  test('calls onClear when clear button is clicked', () => {
+  test('calls onClear when the clear button is clicked', () => {
     const handleClear = jest.fn();
-    render(<ListOptions options={options} selectedOption={options[1]} onChange={() => {}} onClear={handleClear} />);
-    const button = screen.getByText('Clear Selection');
-    fireEvent.click(button);
+    renderComponent({ selectedOption: options[0], onClear: handleClear });
+
+    fireEvent.click(screen.getByText(/Clear Selection/i));
+
     expect(handleClear).toHaveBeenCalled();
   });
 
