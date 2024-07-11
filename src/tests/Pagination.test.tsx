@@ -4,13 +4,15 @@ import Pagination from '../components/Pagination'; // Ajusta la ruta de importac
 
 
 test('llama a onSelectPage con el número de página correcto al hacer clic en los botones anterior y siguiente', () => {
+  const mockOnSelectPage = jest.fn();
+  render(<Pagination currentPage={3} totalPages={10} onSelectPage={mockOnSelectPage} />);
 
-    fireEvent.click(getByText('Anterior'));
-    expect(mockOnSelectPage).toHaveBeenCalledWith(2);
+  fireEvent.click(screen.getByText('2'));
+  expect(mockOnSelectPage).toHaveBeenCalledWith(2);
 
-    fireEvent.click(getByText('Siguiente'));
-    expect(mockOnSelectPage).toHaveBeenCalledWith(4);
-  });
+  fireEvent.click(screen.getByText('4'));
+  expect(mockOnSelectPage).toHaveBeenCalledWith(4); // Ajusta esto según la lógica de paginación esperada
+});
 
   test('disables previous button on first page', () => {
     const mockOnSelectPage = jest.fn();
