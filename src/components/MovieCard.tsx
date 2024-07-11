@@ -1,6 +1,8 @@
 import React from 'react';
 import { Movie } from '../models/Movie';
 import { useNavigate } from 'react-router-dom';
+import optionalPoster from '../assets/pelicula.jpeg';
+
 import '../styles/MovieCard.css';
 
 interface MovieCardProps {
@@ -19,7 +21,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
 
   return (
     <div className="movie-card" >
-      <img src={poster || "https://example.com/no-image.jpg"} alt={title || "No Title"} className="poster-image" />
+      <img src={poster || optionalPoster} alt={title || "No Title"} className="poster-image" />
       { (
         <div className="overlay">
           <h3>{title || "No Title"}</h3>
