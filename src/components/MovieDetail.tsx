@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { APIService } from '../services/movies';
 import { Movie } from '../models/Movie';
 import Loader from './Loader';
+import optionalPoster from '../assets/pelicula.jpeg';
 import '../styles/MovieDetail.css';
 
 interface MovieDetailProps {
@@ -68,7 +69,7 @@ const MovieDetail: React.FC<MovieDetailProps> = ({ genreMap }) => {
   ) : null;
   return (
     <div className="movie-detail">
-      <img src={poster} alt={title} />
+      <img src={poster || optionalPoster} alt={title} />
       <div className="movie-detail-content">
         <h2>Title: {title}</h2>
         <p>Release year: {releaseYear}</p>
