@@ -23,18 +23,15 @@ const renderComponent = (props: Partial<ListOptionsProps> = {}) => {
 };
 
 describe('ListOptions Component', () => {
-  const options = [
-    { value: '1', label: 'Option 1' },
-    { value: '2', label: 'Option 2' },
-    { value: '3', label: 'Option 3' },
-  ];
-
   test('renders options correctly', () => {
-    render(<ListOptions options={options} selectedOption={null} onChange={() => {}} onClear={() => {}} />);
-    const select = screen.getByRole('combobox');
-    expect(select).toBeInTheDocument();
+    renderComponent();
+
+    // Check that the placeholder is present
+    expect(screen.getByText(/Select an option/i)).toBeTruthy();
+
+    // Check that all options are rendered
     options.forEach(option => {
-      expect(screen.getByText(option.label)).toBeInTheDocument();
+      expect(screen.getByText(option.label)).toBeTruthy();
     });
   });
 
