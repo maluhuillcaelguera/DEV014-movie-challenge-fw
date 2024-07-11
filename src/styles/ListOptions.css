@@ -1,21 +1,31 @@
+/* ListOptions.css */
 .list-options {
-    display: flex;
-    align-items: center;
-  }
-  
-  .list-options select {
-    margin-right: 10px;
-  }
-  
-  .list-options button {
-    padding: 5px 10px;
-    background-color: #ff6b6b;
-    border: none;
-    color: white;
-    cursor: pointer;
-  }
-  
-  .list-options button:hover {
-    background-color: #ff4c4c;
-  }
-  
+  display: flex;
+  align-items: center;
+}
+
+.custom-select {
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid #000000;
+  background-color: white;
+  font-size: 1em;
+  color: #333;
+  flex-grow: 1;
+  margin-right: 10px;
+}
+
+
+.clear-button {
+  background-color: #ffffff;
+  border: none;
+  color: #373d3c;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+}
+
+.clear-button:hover {
+  background-color: #0be6a4;
+}
