@@ -27,11 +27,11 @@ describe('ListOptions Component', () => {
     renderComponent();
 
     // Check that the placeholder is present
-    expect(screen.getByText(/Select an option/i)).toBeTruthy();
+    expect(screen.getByText('Select an option')).toBeInTheDocument();
 
     // Check that all options are rendered
     options.forEach(option => {
-      expect(screen.getByText(option.label)).toBeTruthy();
+      expect(screen.getByText(option.label)).toBeInTheDocument();
     });
   });
 
@@ -48,7 +48,8 @@ describe('ListOptions Component', () => {
     const handleClear = jest.fn();
     renderComponent({ selectedOption: options[0], onClear: handleClear });
 
-    fireEvent.click(screen.getByText(/Clear Selection/i));
+    const clearButton = screen.getByRole('button', { name: /x/i });
+    fireEvent.click(clearButton);
 
     expect(handleClear).toHaveBeenCalled();
   });
@@ -56,26 +57,26 @@ describe('ListOptions Component', () => {
   test('does not render clear button when no option is selected', () => {
     renderComponent();
 
-    expect(screen.queryByText(/Clear Selection/i)).toBeNull();
+    expect(screen.queryByRole('button', { name: /x/i })).not.toBeInTheDocument();
   });
 
   test('renders clear button when an option is selected', () => {
     renderComponent({ selectedOption: options[0] });
 
-    expect(screen.getByText(/Clear Selection/i)).toBeTruthy();
+    expect(screen.getByRole('button', { name: /x/i })).toBeInTheDocument();
   });
 
   test('displays the correct selected option', () => {
     renderComponent({ selectedOption: options[1] });
 
-    expect((screen.getByRole('combobox') as HTMLSelectElement).value).toBe('option2');
+    expect(screen.getByRole('combobox')).toHaveValue('option2');
   });
 
   test('disables the placeholder option', () => {
     renderComponent();
 
-    const placeholderOption = screen.getByText(/Select an option/i);
-    expect(placeholderOption).toBeTruthy();
-    expect((placeholderOption as HTMLOptionElement).disabled).toBe(true);
+    const placeholderOption = screen.getByRole('option', { name: 'Select an option' });
+    expect(placeholderOption).toBeInTheDocument();
+    expect(placeholderOption).toBeDisabled();
   });
 });

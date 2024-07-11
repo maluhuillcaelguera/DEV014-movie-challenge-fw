@@ -28,7 +28,7 @@ const ListOptions: React.FC<ListOptionsProps> = ({ options, selectedOption, onCh
           }
         }}
       >
-        <option value="" disabled>{placeholder}</option> {/* Usar el placeholder aquí */}
+        <option value="" disabled>{placeholder}</option> {}
         {options.map(option => (
           <option key={option.value} value={option.value}>
             {option.label}
