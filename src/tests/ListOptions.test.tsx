@@ -69,5 +69,12 @@ describe('ListOptions Component', () => {
 
     expect((screen.getByRole('combobox') as HTMLSelectElement).value).toBe('option2');
   });
+
+  test('disables the placeholder option', () => {
+    renderComponent();
+
+    const placeholderOption = screen.getByText(/Select an option/i);
+    expect(placeholderOption).toBeTruthy();
+    expect((placeholderOption as HTMLOptionElement).disabled).toBe(true);
   });
 });
