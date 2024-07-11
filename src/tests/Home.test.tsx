@@ -81,19 +81,20 @@ describe('Home Component', () => {
     });
   });
 
-  test('muestra un mensaje de error cuando la API falla', async () => {
-    const errorMessage = 'Failed to fetch movies';
-    (APIService.getMovies as jest.Mock).mockRejectedValue(new Error(errorMessage));
-    (APIService.getMovieGenres as jest.Mock).mockResolvedValue([]);
+  test('should render error message on API failure', async () => {
+    await act( async () => {
+      (APIService.getMovieGenres as jest.Mock).mockRejectedValue(new Error('Failed to fetch'));
+      (APIService.getMovies as jest.Mock).mockResolvedValue(mockMoviesResponse);
 
-    render(
-      <MemoryRouter>
-        <Home />
-      </MemoryRouter>
-    );
+      render(
+        <MemoryRouter>
+          <Home />
+        </MemoryRouter>
+      );
+    });
 
     await waitFor(() => {
-      expect(screen.getByText(`Error: ${errorMessage}`)).toBeTruthy(); // Verificar que el mensaje de error está en el documento
+      expect(screen.getByText(/Error: Failed to fetch/i)).toBeInTheDocument();
     });
   });
 });
