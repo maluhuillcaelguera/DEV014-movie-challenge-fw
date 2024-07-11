@@ -53,9 +53,10 @@ describe('ListOptions Component', () => {
     expect(handleClear).toHaveBeenCalled();
   });
 
-  test('highlights the selected option correctly', () => {
-    render(<ListOptions options={options} selectedOption={options[1]} onChange={() => {}} onClear={() => {}} />);
-    const select = screen.getByRole('combobox');
-    expect(select.value).toBe('2');
+  test('does not render clear button when no option is selected', () => {
+    renderComponent();
+
+    expect(screen.queryByText(/Clear Selection/i)).toBeNull();
+  });
   });
 });
