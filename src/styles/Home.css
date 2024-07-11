@@ -3,6 +3,11 @@
     padding: 20px;
     text-align: center;
   }
+  .Home h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
   
   .movie-list {
     display: flex;
@@ -23,5 +28,11 @@
   .movie-info {
     text-align: left;
     padding: 10px;
+  }
+  
+  .selectors-container {
+    display: flex;
+    gap: 10px; /* Espacio entre los selectores */
+    margin-bottom: 20px; /* Espacio debajo de los selectores */
   }
   
