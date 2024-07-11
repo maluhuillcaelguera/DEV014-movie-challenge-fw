@@ -58,6 +58,7 @@ describe('ListOptions Component', () => {
 
     expect(screen.queryByText(/Clear Selection/i)).toBeNull();
   });
+
   test('renders clear button when an option is selected', () => {
     renderComponent({ selectedOption: options[0] });
 
