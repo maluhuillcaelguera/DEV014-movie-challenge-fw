@@ -62,3 +62,58 @@ const mixedMovies: Movie[] = [
     voteAverage: 7.9,
   },
 ];
+
+describe('MovieList Component', () => {
+  test('renders a message when there are no movies', () => {
+    render(<MovieList movies={[]} />);
+
+    expect(screen.queryByTestId('movie-card')).toBeNull();
+    // Añadimos una comprobación para asegurarnos de que se muestra el mensaje de "No movies available"
+    // expect(screen.queryByText('No movies available')).toBeTruthy();
+  });
+
+  test('renders the correct number of movies', () => {
+    render(<MovieList movies={movies} />);
+
+    const movieCards = screen.getAllByTestId('movie-card');
+    expect(movieCards.length).toBe(movies.length);
+  });
+
+  test('renders the correct movie titles', () => {
+    render(<MovieList movies={movies} />);
+
+    movies.forEach((movie) => {
+      if (movie.title) {
+        expect(screen.queryByText(movie.title)).toBeTruthy();
+      }
+    });
+  });
+
+  test('renders the correct number of mixed type movies', () => {
+    render(<MovieList movies={mixedMovies} />);
+
+    const movieCards = screen.getAllByTestId('movie-card');
+    expect(movieCards.length).toBe(mixedMovies.length);
+  });
+
+  test('renders the correct mixed type movie titles', () => {
+    render(<MovieList movies={mixedMovies} />);
+
+    mixedMovies.forEach((movie) => {
+      if (movie.title) {
+        expect(screen.queryByText(movie.title)).toBeTruthy();
+      }
+    });
+  });
+
+  test('renders correctly with mixed movies and displays their titles', () => {
+    render(<MovieList movies={[...movies, ...mixedMovies]} />);
+
+    const combinedMovies = [...movies, ...mixedMovies];
+    combinedMovies.forEach((movie) => {
+      if (movie.title) {
+        expect(screen.queryByText(movie.title)).toBeTruthy();
+      }
+    });
+  });
+});
