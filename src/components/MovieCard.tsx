@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Movie } from '../models/Movie';
 import { useNavigate } from 'react-router-dom';
 import '../styles/MovieCard.css';

@@ -21,14 +21,7 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onSele
     }
   };
 
-  const handleFirstPageClick = () => {
-    onSelectPage(1);
-  };
-
-  const handleLastPageClick = () => {
-    onSelectPage(totalPages);
-  };
-
+  
   const renderPageNumbers = () => {
     const pageNumbers = [];
     for (let i = 1; i <= 10; i++) {
