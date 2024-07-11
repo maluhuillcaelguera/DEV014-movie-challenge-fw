@@ -8,6 +8,7 @@ import { APIService } from '../services/movies'; // Asegúrate de importar desde
 import { formatGenresToMap, formatGenresToOptions } from '../utils/transformers';
 import Pagination from './Pagination';
 import ListOptions from './ListOptions';
+import Loader from './Loader'; // Asegúrate de tener el componente Loader importado
 import '../styles/Home.css';
 
 const Home: React.FC = () => {
@@ -23,9 +24,8 @@ const Home: React.FC = () => {
   const selectedSort = searchParams.get('sortBy');
 
   const sortOptions = [
-    { value: 'popularity.desc', label: 'Popularidad' },
-    { value: 'release_date.desc', label: 'Fecha de lanzamiento' },
-    { value: 'vote_average.desc', label: 'Calificación' },
+    { value: 'release_date.asc', label: 'Año (Ascendente)' },
+    { value: 'release_date.desc', label: 'Año (Descendente)' },
   ];
 
   useEffect(() => {
@@ -74,7 +74,7 @@ const Home: React.FC = () => {
   };
 
   if (loading) {
-    return <div>Cargando...</div>;
+    return <Loader />;
   }
 
   if (error) {
@@ -83,22 +83,26 @@ const Home: React.FC = () => {
 
   return (
     <div className="Home">
-      <h1>Mi Catálogo de Películas</h1>
+    <h1>Mi Catálogo de Películas</h1>
+    <div className="selectors-container">
       <ListOptions 
         options={genres} 
         selectedOption={genres.find(option => option.value === selectedGenre) || null} 
         onChange={handleGenreChange} 
         onClear={() => handleGenreChange(null)} 
+        placeholder="Género"
       />
       <ListOptions 
         options={sortOptions} 
         selectedOption={sortOptions.find(option => option.value === selectedSort) || null} 
         onChange={handleSortChange} 
         onClear={() => handleSortChange(null)} 
+        placeholder="Ordenar por"
       />
-      <MovieList movies={movies} />
-      <Pagination currentPage={currentPage} totalPages={totalPages} onSelectPage={handlePageSelect} />
     </div>
+    <MovieList movies={movies} />
+    <Pagination currentPage={currentPage} totalPages={totalPages} onSelectPage={handlePageSelect} />
+  </div>
   );
 };
 
