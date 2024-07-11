@@ -1,6 +1,7 @@
-// src/services/movieservice.ts
+// src/services/movies.ts
 import { Movie } from '../models/Movie';
 import { formatMovie } from '../utils/transformers';
+import { getToken } from '../utils/getEnv';
 
 interface GetMoviesParams {
   filters: {
@@ -21,7 +22,7 @@ interface MovieResponse {
 }
 
 const API_URL = 'https://api.themoviedb.org/3';
-const API_KEY = import.meta.env.VITE_TOKEN_API;
+const API_KEY = getToken();
 
 export class APIService {
   static async getMovies(params: GetMoviesParams, genreMap: Map<number, string>): Promise<MovieResponse> {
@@ -88,11 +89,9 @@ export class APIService {
       if (!response.ok) {
         throw new Error('Failed to fetch movie details');
       }
-
       const data = await response.json();
-      console.log('API Response:', data);
-
       return formatMovie(data, genreMap);
+      
     } catch (error) {
       console.error('Error fetching movie details:', error);
       throw error;
