@@ -7,9 +7,9 @@ export type Movie = {
     poster ? : string;
     releaseYear ?: number;
     overview ? : string;
-    runtime ? : number; // Duración en minutos
-    genres ? : string[]; // Array de géneros
-    voteAverage ? : number; // Promedio de votos
+    runtime ? : number; 
+    genres ? : string[]; 
+    voteAverage ? : number; 
   };
   
   
